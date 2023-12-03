@@ -7,6 +7,8 @@ export default function AvailablePlaces({ onSelectPlace }) {
   // Because JS nature, if no data, cannot wait
   //const [availablePlaces, setAvailablePlaces] = useState(places)
 
+
+  const [isFetching, setIsfetching] = useState(false)
   const [availablePlaces, setAvailablePlaces] = useState([]);
 
   // useEffect(() => {
@@ -21,12 +23,17 @@ export default function AvailablePlaces({ onSelectPlace }) {
 
   useEffect(() => {
     async function fetchPlaces() {
+
+      setIsfetching(true)
       const response = await fetch("http://localhost:3000/places")
-      const resData = response.json()
+      const resData = await response.json()
 
       setAvailablePlaces(resData.places)
+      setIsfetching(false)
 
     }
+
+    fetchPlaces();
   }, []);
 
   // not work with backend request. Not instant.
@@ -49,6 +56,8 @@ export default function AvailablePlaces({ onSelectPlace }) {
     <Places
       title="Available Places"
       places={availablePlaces}
+      isLoading={isFetching}
+      loadingText="Fetching places data..."
       fallbackText="No places available."
       onSelectPlace={onSelectPlace}
     />
