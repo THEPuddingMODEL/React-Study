@@ -5,6 +5,7 @@ import Modal from './components/Modal.jsx';
 import DeleteConfirmation from './components/DeleteConfirmation.jsx';
 import logoImg from './assets/logo.png';
 import AvailablePlaces from './components/AvailablePlaces.jsx';
+import { updateUserPlaces } from './http.js';
 
 function App() {
   const selectedPlace = useRef();
@@ -22,7 +23,7 @@ function App() {
     setModalIsOpen(false);
   }
 
-  function handleSelectPlace(selectedPlace) {
+  async function handleSelectPlace(selectedPlace) {
     setUserPlaces((prevPickedPlaces) => {
       if (!prevPickedPlaces) {
         prevPickedPlaces = [];
@@ -32,6 +33,17 @@ function App() {
       }
       return [selectedPlace, ...prevPickedPlaces];
     });
+
+    // if the user pucked some new places and we set state update, this following code will still have the previous state
+    //updateUserPlaces(userPlaces)
+
+    try {
+      
+      await updateUserPlaces([selectedPlace, ...userPlaces])
+
+    } catch (error) {
+      //...
+    }   
   }
 
   const handleRemovePlace = useCallback(async function handleRemovePlace() {
