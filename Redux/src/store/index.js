@@ -1,6 +1,39 @@
 import {createStore} from 'redux'
 
+import {createSlice} from '@reduxjs/toolkit'
+
 const initialState = {counter:0, showCounter:true}
+
+// preparing a slice of global state
+createSlice({
+    
+    name:'counter',
+    initialState, 
+    // all the reducer this slide needs
+    reducers:{
+
+        // automatically recieve latest state
+        // dont need actions, atumatically called based on action
+        // dont need if statements
+        increment(state){
+            // when using redux toolkit, it will automatically clone a state
+            // and return
+            // it is immutable code, automatically handled by redux toolkit
+            state.counter++
+        },
+        decrement(state){
+            state.counter--
+        },
+        increase(state, action){
+            state.counter = state.counter + action.amount
+        },
+        toggleCounter(state){
+            state.showCounter = !state.showCounter
+        },
+
+
+    }
+})
 
 const reducerCounter = (state= initialState,action) => {
 
