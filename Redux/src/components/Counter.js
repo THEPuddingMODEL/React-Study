@@ -1,6 +1,8 @@
 import classes from './Counter.module.css';
 import {useSelector, useDispatch} from 'react-redux'
 
+import { counterActions } from '../store';
+
 // selector allows us to select part of state
 // if is a class bsased, connect function can be used. wrapper around class component
 
@@ -19,22 +21,31 @@ const Counter = () => {
 
   const incremtnHandler = ()=>{
 
-    dispatch({type:'increment'})
+    //dispatch({type:'increment'})
+
+    dispatch(counterActions.increment())
 
   }
 
   const increaseHandler = ()=>{
 
-    dispatch({type:'increase', amount: 5})
+    //dispatch({type:'increase', amount: 5})
+
+    // {unique identifer, pauload}
+    dispatch(counterActions.increase(5))
 
   }
 
   const decremtnHandler = ()=>{
-    dispatch({type:'decrement'})
+    //dispatch({type:'decrement'})
+
+    dispatch(counterActions.decrement())
   }
 
   const toggleCounterHandler = () => {
-    dispatch({type:"toggle"})
+    //dispatch({type:"toggle"})
+
+    dispatch(counterActions.toggleCounter())
   };
 
   return (
